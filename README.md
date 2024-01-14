@@ -4,10 +4,15 @@ This project presents a comprehensive Bayesian analysis of the distribution of c
 
 The analysis incorporates Bayesian statistical methods to explore familial height dynamics, emphasizing understanding the genetic and environmental factors that contribute to height variation within families.
 
+The full report is available here: [Full report](report.pdf).
+
 <div style="display: flex; justify-content: space-between;">
     <img src="images/height_plot.png" alt="Correlation matrix" title="One family analysis" width="400"/>
     <img src="images/combined_intro.png" alt="Plotted PCA" title="Correlation of children's height with parent's" width="400"/>
 </div>
+
+
+
 
 ## Features
 
@@ -27,5 +32,3 @@ The analysis incorporates Bayesian statistical methods to explore familial heigh
     <img src="images/hierchain.png" alt="Correlation matrix" title="Convergence of MCMC" width="400"/>
     <img src="images/kernelp.png" alt="Plotted PCA" title="Predictive checks" width="400"/>
 </div>
-
-
