@@ -12,7 +12,7 @@ library(MASS)
 library(fitdistrplus)
 
 #Galton's height data
-height <- read_csv("height.csv")
+height <- read_csv("/home/wohldan/Documents/MyGit/HeightBDA/height.csv")
 
 #Permuting rows so there is no hidden structure
 height <- height[sample(nrow(height)),]
@@ -23,25 +23,29 @@ height$Mother = height$Mother*2.54
 height$Height = height$Height*2.54
 height$Gender = NULL
 
-#Plot Father-kids with mother color
-p <- ggplot(height, aes(x=height$Father, y=height$Height))+
-  scale_x_continuous( ) +
-  scale_y_continuous() +
+
+# Plot Father-kids with mother color
+p1 <- ggplot(height, aes(x = Father, y = Height)) +
+  geom_jitter(aes(colour = Mother), size = 3, alpha = 0.7) +
   labs(title = 'Father-Child', x = 'Father (cm)', y = 'Child (cm)') +
-  theme(panel.grid.major = element_blank())+
-  geom_jitter(aes(colour=Mother))+
-  theme_gray(base_size = 18)
+  theme_minimal(base_size = 18) +
+  theme(panel.grid.major = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1))
 
-#Plot Mother-kids with father color
-q<-ggplot(height, aes(x=height$Mother, y=height$Height))+
-  scale_x_continuous( ) +
-  scale_y_continuous() +
+# Plot Mother-kids with father color
+q1 <- ggplot(height, aes(x = Mother, y = Height)) +
+  geom_jitter(aes(colour = Father), size = 3, alpha = 0.7) +
   labs(title = 'Mother-Child', x = 'Mother (cm)', y = 'Child (cm)') +
-  theme(panel.grid.major = element_blank())+
-  geom_jitter(aes(colour=Father))+
-theme_gray(base_size = 18)
+  theme_minimal(base_size = 18) +
+  theme(panel.grid.major = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1))
 
-grid.arrange(p, q, nrow = 1)
+# Arrange plots side by side
+combined_plot <- grid.arrange(p1, q1, nrow = 1)
+
+#save the combined plot as a PDF file
+ggsave("combined_intro.pdf", combined_plot, width = 14, height = 7, units = "in")
+
 
 #Correlation
 # corr_height <- height
@@ -94,16 +98,45 @@ print(obr+ggtitle("Heights of kids in different families")+
   
 
 # Histogram for Introduction chapter
-#  intro <- height[height$Family==130,]
-#  kids <- intro$Height
-#  kids <- jitter(kids)
-#  fit <- fitdistr(kids, "normal")
-# # 
-#  xname = 130
-#  hist(kids, prob = TRUE,main = paste("Histogram of family No." , xname),xlim=c(160,185),xlab = "Height of children (cm)")
-#  curve(dnorm(x, fit$estimate[1], fit$estimate[2]), add = TRUE,col="violet")
-#  abline(v=c(174,169), col=c("blue", "red"), lty=c(2,2), lwd=c(3, 3))
+library(RColorBrewer)
 
+intro <- height[height$Family == 130, ]
+kids <- intro$Height
+kids <- jitter(kids)
+
+# Fit a normal distribution
+fit <- fitdistr(kids, "normal")
+
+father_mean <- mean(intro$Father)
+mother_mean <- mean(intro$Mother)
+
+# Create a data frame for plotting
+plot_data <- data.frame(x = kids)
+
+# Plot using ggplot2 for better aesthetics
+# Create a new data frame for vertical lines
+vline_data <- data.frame(
+  xintercept = c(father_mean, mother_mean),
+  color = c("Father", "Mother")
+)
+
+intro_plot <- ggplot(plot_data, aes(x = x)) +
+      geom_histogram(aes(y = ..density..), bins = 20, fill = "lightblue", color = "white", 
+                     alpha = 0.7) +
+      geom_density(aes(fill = "Density"), alpha = 0.7) +
+      stat_function(fun = dnorm, args = list(mean = fit$estimate[1], sd = fit$estimate[2]), 
+                    aes(color = "Fitted Normal Distribution"), linetype = "dashed", size = 1) +
+      geom_vline(data = vline_data, aes(xintercept = xintercept, color = color), linetype = "dotted", size = 1.5) +
+      labs(title = "Histogram and Density Plot of Children's Height",
+           x = "Height (cm)", y = "Density") +
+      theme_minimal() +
+      scale_fill_manual(values = c("Density" = "orange")) +
+      scale_color_manual(values = c("Fitted Normal Distribution" = "blue",
+                                    "Father" = "green",
+                                    "Mother" = "red")) +
+      theme(legend.position = "left")
+
+ggsave("height_plot.pdf", plot = intro_plot, width = 10, height = 6, units = "in")
 
 #STAN MODELS
 #####
