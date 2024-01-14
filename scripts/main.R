@@ -44,7 +44,7 @@ q1 <- ggplot(height, aes(x = Mother, y = Height)) +
 combined_plot <- grid.arrange(p1, q1, nrow = 1)
 
 #save the combined plot as a PDF file
-ggsave("combined_intro.pdf", combined_plot, width = 14, height = 7, units = "in")
+ggsave("combined_intro.png", combined_plot, width = 14, height = 7, units = "in")
 
 
 #Correlation
@@ -136,7 +136,7 @@ intro_plot <- ggplot(plot_data, aes(x = x)) +
                                     "Mother" = "red")) +
       theme(legend.position = "left")
 
-ggsave("height_plot.pdf", plot = intro_plot, width = 10, height = 6, units = "in")
+ggsave("height_plot.png", plot = intro_plot, width = 10, height = 6, units = "in")
 
 #STAN MODELS
 #####
