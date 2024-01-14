@@ -4,6 +4,11 @@ This project presents a comprehensive Bayesian analysis of the distribution of c
 
 The analysis incorporates Bayesian statistical methods to explore familial height dynamics, emphasizing understanding the genetic and environmental factors that contribute to height variation within families.
 
+<div style="display: flex; justify-content: space-between;">
+    <img src="images/height_plot.png" alt="Correlation matrix" title="One family analysis" width="400"/>
+    <img src="images/combined_intro.png" alt="Plotted PCA" title="Correlation of children's height with parent's" width="400"/>
+</div>
+
 ## Features
 
 - Implementation of Bayesian models to analyze children's height distribution in families.
@@ -11,11 +16,6 @@ The analysis incorporates Bayesian statistical methods to explore familial heigh
 
 - Application of pooled, hierarchical, and hierarchical models with parental prior mean.
 - Detailed data preprocessing and exploration using Galton's height data.
-
-<div style="display: flex; justify-content: space-between;">
-    <img src="images/height_plot.png" alt="Correlation matrix" title="One family analysis" width="400"/>
-    <img src="images/combined_intro.png" alt="Plotted PCA" title="Correlation of children's height with parent's" width="400"/>
-</div>
 
 
 - Utilization of Stan for Bayesian inference and model simulations.
