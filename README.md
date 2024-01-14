@@ -11,7 +11,7 @@ The analysis incorporates Bayesian statistical methods to explore familial heigh
 ![Project Screenshot](scripts/combined_intro.png "Correlation of children's height with parent's")
 - Application of pooled, hierarchical, and hierarchical models with parental prior mean.
 - Detailed data preprocessing and exploration using Galton's height data.
-![Project Screenshot](scripts/height_plot.png "One family analysis")
+![Project Screenshot](height_plot.png "One family analysis")
 
 - Utilization of Stan for Bayesian inference and model simulations.
 ![Project Screenshot](images/hierchain.pdf "Convergence of MCMC")
